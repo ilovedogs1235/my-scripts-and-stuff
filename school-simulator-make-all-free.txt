@@ -1,0 +1,50 @@
+game.Players.LocalPlayer.Backpack.Boombox.LocalScript:Destroy()
+game.Players.LocalPlayer.Backpack.Push.LocalScript:Destroy()
+for _,amogus in pairs(game.Players.LocalPlayer.Backpack['Chalk']:GetChildren()) do
+  if amogus:IsA("LocalScript") then
+      amogus:Destroy()
+  end
+end
+wait(1)
+script = Instance.new("LocalScript", game.Players.LocalPlayer.Backpack['Chalk'])
+local u1 = false;
+local function u2(p1, p2)
+local v1 = RaycastParams.new();
+v1.FilterDescendantsInstances = { script.Parent.Parent, workspace.Ignore };
+v1.FilterType = Enum.RaycastFilterType.Blacklist;
+local v2 = workspace.CurrentCamera:ScreenPointToRay(p1, p2);
+return workspace:Raycast(v2.Origin, v2.Direction * 40, v1);
+end;
+script.Parent.Equipped:Connect(function(p3)
+local u3 = false;
+p3.Button1Down:Connect(function()
+local v3 = time();
+u1 = v3;
+local v4 = nil;
+while u1 == v3 do
+local v5 = u2(p3.X, p3.Y);
+if not v5 then
+return;
+end;
+if v5 and (2 == (1 + 1)) then
+if not v4 then
+v4 = v5.Position;
+end;
+if (v4 - v5.Position).Magnitude > 0.155 then
+u3 = true;
+script.Parent.Draw:FireServer(v5.Instance, v4, v5.Position);
+v4 = v5.Position;
+end;
+end;
+task.wait();
+end;
+end);
+p3.Button1Up:Connect(function()
+if not u3 then
+local v6 = u2(p3.X, p3.Y);
+script.Parent.Draw:FireServer(v6.Instance, v6.Position, v6.Position + Vector3.new(0, 0.2, 0));
+end;
+u3 = false;
+u1 = false;
+end);
+end);
